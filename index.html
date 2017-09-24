@@ -1,0 +1,419 @@
+<html>
+<head>
+  <title>NPO法人ハックジャパン- 動作確認ページ</title>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <link rel="stylesheet" href="https://www.hack.or.jp/wp-content/themes/hackjapanVerSP170213/font-awesome/css/font-awesome.min.css" type="text/css">
+</head>
+<body>
+<style>
+body {
+padding: 0 0;
+margin: 0 0;
+background-color: #fcfcfc;
+background-image: radial-gradient(#eee 10%, transparent 20%), radial-gradient(#eee 10%, transparent 20%);
+background-size: 20px 20px;
+background-position: 0 0, 10px 10px;
+}
+* {
+  box-sizing: border-box;
+}
+#over {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #143741;
+  font-family: "AvenirNext-Regular", Avenir, Helvetica, Arial, sans-serif;
+}
+body.complete #over {
+  transition: 1.0s ;
+  display: none;
+}
+.loading-indicator {
+  -webkit-animation: rotatefull 9s 0s infinite linear forwards;
+          animation: rotatefull 9s 0s infinite linear forwards;
+  width: 10rem;
+  height: 10rem;
+  position: absolute;
+  top: 1.3rem;
+  left: 50%;
+  top: 50%;
+  left: 50%;
+  margin-top: -6rem;
+  -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0);
+}
+svg {
+  -webkit-animation: scaleup 0.5s 0s 1 ease-in-out forwards;
+          animation: scaleup 0.5s 0s 1 ease-in-out forwards;
+}
+svg circle {
+  stroke: #40B64F;
+  fill: none;
+}
+svg circle:last-of-type {
+  opacity: 0;
+  stroke: #ddd;
+  -webkit-transition: stroke-dashoffset 0.5s ease-out;
+  transition: stroke-dashoffset 0.5s ease-out;
+}
+.complete svg {
+  -webkit-animation-name: scaledown;
+          animation-name: scaledown;
+}
+#over p {
+  text-align: center;
+  color: #40B64F;
+  font-size: 2rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  margin-top: -2.5rem;
+}
+body.complete #over p {
+  -webkit-animation: scaledown 0.5s 0s 1 ease-in-out forwards;
+          animation: scaledown 0.5s 0s 1 ease-in-out forwards;
+}
+@-webkit-keyframes rotatefull {
+  0% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(0);
+            transform: translate3d(-50%, 0, 0) rotate(0);
+  }
+  20% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(72deg);
+            transform: translate3d(-50%, 0, 0) rotate(72deg);
+  }
+  40% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(144deg);
+            transform: translate3d(-50%, 0, 0) rotate(144deg);
+  }
+  60% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(216deg);
+            transform: translate3d(-50%, 0, 0) rotate(216deg);
+  }
+  80% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(288deg);
+            transform: translate3d(-50%, 0, 0) rotate(288deg);
+  }
+  99%,
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(360deg);
+            transform: translate3d(-50%, 0, 0) rotate(360deg);
+  }
+}
+@keyframes rotatefull {
+  0% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(0);
+            transform: translate3d(-50%, 0, 0) rotate(0);
+  }
+  20% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(72deg);
+            transform: translate3d(-50%, 0, 0) rotate(72deg);
+  }
+  40% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(144deg);
+            transform: translate3d(-50%, 0, 0) rotate(144deg);
+  }
+  60% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(216deg);
+            transform: translate3d(-50%, 0, 0) rotate(216deg);
+  }
+  80% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(288deg);
+            transform: translate3d(-50%, 0, 0) rotate(288deg);
+  }
+  99%,
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0) rotate(360deg);
+            transform: translate3d(-50%, 0, 0) rotate(360deg);
+  }
+}
+@-webkit-keyframes scaleup {
+  0% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  72% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  84% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  98% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  99% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes scaleup {
+  0% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  72% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  84% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  98% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  99% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@-webkit-keyframes scaledown {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+  15% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  60% {
+    opacity: 1;
+  }
+  99%,
+  100% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+    opacity: 0;
+  }
+}
+@keyframes scaledown {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 1;
+  }
+  15% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  60% {
+    opacity: 1;
+  }
+  99%,
+  100% {
+    -webkit-transform: scale(0.1);
+            transform: scale(0.1);
+    opacity: 0;
+  }
+}
+.box-parent {
+  width: 45%;
+  text-align: center;
+  font-family: Arial;
+  font-weight: 900;
+  box-shadow: 5px 5px #b9b9b9;
+  margin: 50px 5px 50px 5px;
+}
+@media screen and (max-width: 870px) {
+  .box-parent {
+    width: 100%;
+  }
+}
+.box-child-head {
+  background-color: #7d8274;
+  padding: 20px 100px;
+  font-size: 50px;
+  color: #fff;
+}
+.box-child-cont {
+  background-color: #a3cc02;
+  font-size: 49px;
+  font-weight: 900;
+  padding: 20px 20px;
+}
+span.support {
+  font-size: 10px;
+  display: block;
+  padding: 30px 0px 0px 1px;
+  color: #efefef;
+}
+i.fa {
+  color: #fff;
+  font-size: 150px;
+}
+p.alart {
+  font-size: 20px;
+  color: #000000;
+}
+.recheck-btn{
+  max-width: 1000px;
+  margin: 0 auto;
+  display: block;
+  height: 75px;
+  text-align: center;
+  padding: 18px;
+  font-size: 25px;
+  text-decoration: none;
+  background: #41589a;
+  color: #fff;
+  border-bottom: solid 4px #627295;
+  border-radius: 3px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+.recheck-btn:active {
+  -ms-transform: translateY(4px);
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);
+  border-bottom: none;
+}
+</style>
+<!-- Loader -->
+<div id="over">
+  <div class="loading-indicator">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 130 130" overflow="visible" enable-background="new 0 0 130 130" id="progress"><circle fill="none" stroke="#000000" stroke-width="4" stroke-miterlimit="10" cx="64.8" cy="64.8" r="59.8"></circle><circle class="styled" fill="none" stroke="#000000" stroke-width="4" stroke-miterlimit="10" cx="64.8" cy="64.8" r="59.8"></circle></svg>
+  </div>
+  <p><b class="percentage"></b></p>
+</div>
+<!-- Main Content -->
+<img src="title.png" style="width: 100%;max-width: 700px; margin: 0 auto; padding: 50px 50px 50px 50px; display: block;">
+<div style="padding:15px;">
+  <a href="#" class="recheck-btn" onclick="window.location.reload();">もう一度チェックする</a>
+  <div style="max-width:1000px;margin:0 auto;">
+    <div class="box-parent" style="float:left;">
+      <div class="box-child-head">
+      OS
+      </div>
+      <div class="box-child-cont">
+        <!-- Judge -->
+        <script type="text/javascript">
+        var os, ua = navigator.userAgent;
+        if (ua.match(/Win(dows )?NT 10\.0/)) {
+          check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";//Windows 10
+        }
+        else if (ua.match(/Win(dows )?NT 6\.3/)) {
+          check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";//Windows 8.1
+        }
+        else if (ua.match(/Win(dows )?NT 6\.2/)) {
+          check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";//Windows 8
+        }
+        else if (ua.match(/Win(dows )?NT 6\.1/)) {
+          check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";//Windows 7
+        }
+        else if (ua.match(/Mac|PPC/)) {
+          if (ua.match(/OS X|MSIE 5\.2/)) {
+            if (ua.match(/Mac OS X ([\.\d_]+)/)) {
+              check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";
+            }
+            else {
+              check= "N/A";
+            }
+          }
+          else {
+            check= "<i class='fa fa-times-circle' aria-hidden='true'></i><br><p class='alart'>Macのバージョンが古い可能性があります。アップデートをお試しください。</p>";
+          }
+        }
+        else {
+          check= "<i class='fa fa-times-circle' aria-hidden='true'></i><br><p class='alart'>OSが古い可能性があります。アップデートを行うか、別のパソコンでお試しください。</p>";
+        }
+        document.write("" + check + "");
+        </script>
+        <!-- Support Code -->
+        <span class="support">
+        サポートコード
+        <script type="text/javascript">
+        var os, ua = navigator.userAgent;
+        if (ua.match(/Mac|PPC/)) {
+          if (ua.match(/OS X|MSIE 5\.2/)) {
+            if (ua.match(/Mac OS X ([\.\d_]+)/)) {
+              document.write ( RegExp.$1 );
+            }
+          }
+        }
+        </script>
+        </span>
+      </div>
+    </div>
+    <div class="box-parent" style="float:right;">
+      <div class="box-child-head">
+      ブラウザー
+      </div>
+      <!-- Judge -->
+      <div class="box-child-cont">
+        <script>
+        var ua = navigator.userAgent, browser;
+        if (ua.match(/Chrome\/([\.\d]+)/)) {
+          browser = "<i class='fa fa-check-circle' aria-hidden='true'></i>"
+        }
+        else {
+          browser = "<i class='fa fa-times-circle' aria-hidden='true'></i><br><p class='alart'>Chromeのバージョンが古いか、Chromeでない可能性があります。</p>";
+        }
+        document.write("" + browser + "");
+        </script>
+        <!-- Support -->
+        <span class="support">
+        サポートコード
+        <script type="text/javascript">
+        var ua = navigator.userAgent, browser;
+        if (ua.match(/Chrome\/([\.\d]+)/)) {
+          document.write ( RegExp.$1 );
+        }
+        </script>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var paths = document.getElementsByClassName('styled');
+var path = paths[paths.length-1];
+var counter = 0;
+var total = 47;
+var length = path.r.baseVal.value * 2 * Math.PI;
+$(path).css({
+  'stroke-dasharray': length,
+  'stroke-dashoffset': 0,
+  'opacity': 1,
+})
+for (var i = 0; i < total; ++i) {
+  setTimeout( function() {
+    counter++;
+    var percentage = Math.ceil(100*counter/total);
+    $('.percentage').text(percentage)
+    $(path).css({
+      'stroke-dashoffset': -((counter/total)*length),
+    });
+    
+    if (percentage >= 100) {
+      setTimeout(function() {
+      document.getElementById('progress').classList.add('complete'); document.body.classList.add('complete');
+      }, 500);
+    }
+  }, (Math.random() * 2500));
+}
+</script>
+</body>
+</html>
