@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>NPO法人ハックジャパン- 動作確認ページ</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" >
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <link rel="stylesheet" href="https://www.hack.or.jp/wp-content/themes/hackjapanVerSP170213/font-awesome/css/font-awesome.min.css" type="text/css">
 </head>
@@ -43,6 +44,12 @@ body.complete #over {
   -webkit-transform: translate3d(-50%, 0, 0);
           transform: translate3d(-50%, 0, 0);
 }
+
+/** "SVG Circle Progress Indicator"
+    This Loading Animation
+    is made by CAPTAIN ANONYMOUS
+    and published on codepen.
+    Licence: MIT               **/
 svg {
   -webkit-animation: scaleup 0.5s 0s 1 ease-in-out forwards;
           animation: scaleup 0.5s 0s 1 ease-in-out forwards;
@@ -324,13 +331,8 @@ p.alart {
           check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";//Windows 7
         }
         else if (ua.match(/Mac|PPC/)) {
-          if (ua.match(/OS X|MSIE 5\.2/)) {
-            if (ua.match(/Mac OS X ([\.\d_]+)/)) {
-              check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";
-            }
-            else {
-              check= "N/A";
-            }
+          if (ua.match(/Mac OS X ([\.\d_]+)/)) {
+            check= "<i class='fa fa-check-circle' aria-hidden='true'></i>";
           }
           else {
             check= "<i class='fa fa-times-circle' aria-hidden='true'></i><br><p class='alart'>Macのバージョンが古い可能性があります。アップデートをお試しください。</p>";
